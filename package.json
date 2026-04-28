@@ -20,17 +20,6 @@
     "type": "git",
     "url": "https://github.com/GabeWalls/db2-embedded-sql.git"
   },
-  "files": [
-    "package.json",
-    "README.md",
-    "CHANGELOG.md",
-    "LICENSE",
-    "language-configuration.json",
-    "syntaxes/**",
-    "snippets/**",
-    "docs/**",
-    "test/fixtures/**"
-  ],
   "contributes": {
     "languages": [
       {
