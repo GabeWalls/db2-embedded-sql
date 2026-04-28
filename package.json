@@ -1,7 +1,7 @@
 {
   "name": "db2-embedded-sql-cobol",
   "displayName": "DB2 Embedded SQL (COBOL)",
-  "description": "DB2 EXEC SQL … END-EXEC highlighting: injects into common COBOL grammars; standalone mode for .sqlcbl/.sqb.",
+  "description": "Injects DB2 EXEC SQL … END-EXEC highlighting into COBOL grammars; minimal standalone grammar for .sqlcbl/.sqb only.",
   "version": "0.0.1",
   "publisher": "local",
   "engines": {
