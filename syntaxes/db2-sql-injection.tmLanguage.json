@@ -1,0 +1,59 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "DB2 EXEC SQL in COBOL (injection)",
+  "scopeName": "source.db2-sql-injection.cobol",
+  "injectionSelector": "(L:source.cobol | L:source.cobol85 | L:source.gnucobol) -string -comment",
+  "patterns": [{ "include": "#exec-sql-block" }],
+  "repository": {
+    "string-single": {
+      "name": "string.quoted.single.cobol",
+      "match": "(?m)'(?:''|[^'\\n])*'"
+    },
+    "string-double": {
+      "name": "string.quoted.double.cobol",
+      "match": "(?m)\"(?:\"\"|[^\"\\n])*\""
+    },
+    "sql-keyword": {
+      "name": "keyword.other.sql",
+      "match": "(?i)\\b(SELECT|FROM|WHERE|AND|OR|NOT|NULL|INSERT|INTO|VALUES|UPDATE|SET|DELETE|EXECUTE|DECLARE|CURSOR|FOR|OPEN|FETCH|CLOSE|PREPARE|DESCRIBE|COMMIT|ROLLBACK|WORK|CONNECT|DISCONNECT|SET|CURRENT|SQL|WHENEVER|GOTO|CONTINUE|INCLUDE|INDICATOR|INTO|USING|FROM|TO|BY|GROUP|ORDER|HAVING|UNION|ALL|DISTINCT|JOIN|LEFT|RIGHT|INNER|OUTER|ON|AS|CASE|WHEN|THEN|ELSE|END|BETWEEN|LIKE|IN|EXISTS|IS|AT|BEGIN|END|OF|ROWS|ONLY|WITH|READ|ONLY|OPTIMIZE|FOR|ROW|LOCK|SHARE|UPDATE|SKIP|LOCKED|DATA|BUFFER|POOL|INDEX|TABLE|VIEW|SCHEMA|GRANT|REVOKE|REFERENCES|CONSTRAINT|PRIMARY|KEY|FOREIGN|DEFAULT|CHECK|CREATE|ALTER|DROP|TRIGGER|PROCEDURE|FUNCTION|CALL|RETURN|RETURNS|LANGUAGE|READS|WRITES|MODIFIES|STATIC|DYNAMIC|IMMEDIATE|HOST|VARIABLES|ROWS|FETCH|FIRST|NEXT|PRIOR|LAST|ABSOLUTE|RELATIVE|SENSITIVE|INSENSITIVE|SCROLL|WITH|HOLD|WITHOUT|RETURN|RESULT|SETS|ATOMIC|SAVEPOINT|RELEASE)\\b"
+    },
+    "host-variable": {
+      "name": "variable.other.host.sql",
+      "match": ":[A-Za-z0-9][A-Za-z0-9_-]*"
+    },
+    "sql-comment": {
+      "patterns": [
+        {
+          "name": "comment.line.double-slash.sql",
+          "match": "--[^\\n]*"
+        },
+        {
+          "name": "comment.block.sql",
+          "match": "/\\*[\\s\\S]*?\\*/"
+        }
+      ]
+    },
+    "exec-sql-inner": {
+      "patterns": [
+        { "include": "#sql-comment" },
+        { "include": "#string-single" },
+        { "include": "#string-double" },
+        { "include": "#host-variable" },
+        { "include": "#sql-keyword" }
+      ]
+    },
+    "exec-sql-block": {
+      "contentName": "meta.embedded.block.sql.cobol",
+      "begin": "(?i)(\\bEXEC\\s+SQL\\b)",
+      "beginCaptures": {
+        "1": { "name": "keyword.other.exec-sql.begin.cobol" }
+      },
+      "end": "(?i)(\\bEND-EXEC)(\\.)?",
+      "endCaptures": {
+        "1": { "name": "keyword.other.exec-sql.end.cobol" },
+        "2": { "name": "punctuation.terminator.statement.cobol" }
+      },
+      "patterns": [{ "include": "#exec-sql-inner" }]
+    }
+  }
+}

@@ -1,7 +1,7 @@
 {
   "name": "db2-embedded-sql-cobol",
   "displayName": "DB2 Embedded SQL (COBOL)",
-  "description": "Syntax highlighting for COBOL with DB2 EXEC SQL ... END-EXEC blocks.",
+  "description": "DB2 EXEC SQL … END-EXEC highlighting: injects into common COBOL grammars; standalone mode for .sqlcbl/.sqb.",
   "version": "0.0.1",
   "publisher": "local",
   "engines": {
@@ -13,7 +13,7 @@
       {
         "id": "db2-cobol",
         "aliases": ["DB2 COBOL", "db2-cobol"],
-        "extensions": [".cbl", ".cob", ".cpy", ".sqlcbl"],
+        "extensions": [".sqlcbl", ".sqb"],
         "configuration": "./language-configuration.json"
       }
     ],
@@ -22,6 +22,11 @@
         "language": "db2-cobol",
         "scopeName": "source.db2-cobol",
         "path": "./syntaxes/db2-cobol.tmLanguage.json"
+      },
+      {
+        "scopeName": "source.db2-sql-injection.cobol",
+        "path": "./syntaxes/db2-sql-injection.tmLanguage.json",
+        "injectTo": ["source.cobol", "source.cobol85", "source.gnucobol"]
       }
     ]
   }
