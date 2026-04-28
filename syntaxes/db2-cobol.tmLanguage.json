@@ -13,36 +13,22 @@
     "cobol-comment": {
       "patterns": [
         {
-          "name": "comment.line.cobol",
-          "match": "^.{6}\\*.*$"
+          "name": "comment.line.fixed.cobol",
+          "match": "(?m)^.{6}[/*][^\\n]*$"
         },
         {
-          "name": "comment.line.cobol",
-          "match": "^\\s*\\*>.*$"
+          "name": "comment.line.free.cobol",
+          "match": "(?m)^\\s*\\*>[^\\n]*$"
         }
       ]
     },
     "string-single": {
       "name": "string.quoted.single.cobol",
-      "begin": "'",
-      "end": "'",
-      "patterns": [
-        {
-          "name": "constant.character.escape.cobol",
-          "match": "''"
-        }
-      ]
+      "match": "(?m)'(?:''|[^'\\n])*'"
     },
     "string-double": {
       "name": "string.quoted.double.cobol",
-      "begin": "\"",
-      "end": "\"",
-      "patterns": [
-        {
-          "name": "constant.character.escape.cobol",
-          "match": "\"\""
-        }
-      ]
+      "match": "(?m)\"(?:\"\"|[^\"\\n])*\""
     },
     "cobol-keyword": {
       "name": "keyword.control.cobol",
@@ -64,8 +50,7 @@
         },
         {
           "name": "comment.block.sql",
-          "begin": "/\\*",
-          "end": "\\*/"
+          "match": "/\\*[\\s\\S]*?\\*/"
         }
       ]
     },
@@ -79,18 +64,17 @@
       ]
     },
     "exec-sql-block": {
-      "name": "meta.embedded.sql.cobol",
+      "contentName": "meta.embedded.block.sql.cobol",
       "begin": "(?i)(\\bEXEC\\s+SQL\\b)",
       "beginCaptures": {
-        "1": { "name": "keyword.other.exec.sql.cobol" }
+        "1": { "name": "keyword.other.exec-sql.begin.cobol" }
       },
-      "end": "(?i)\\b(END-EXEC)\\b",
+      "end": "(?i)(\\bEND-EXEC)(\\.)?",
       "endCaptures": {
-        "1": { "name": "keyword.other.exec.sql.cobol" }
+        "1": { "name": "keyword.other.exec-sql.end.cobol" },
+        "2": { "name": "punctuation.terminator.statement.cobol" }
       },
-      "patterns": [
-        { "include": "#exec-sql-inner" }
-      ]
+      "patterns": [{ "include": "#exec-sql-inner" }]
     }
   }
 }

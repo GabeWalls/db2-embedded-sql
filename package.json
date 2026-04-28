@@ -13,7 +13,7 @@
       {
         "id": "db2-cobol",
         "aliases": ["DB2 COBOL", "db2-cobol"],
-        "extensions": [".cbl", ".cob", ".cpy"],
+        "extensions": [".cbl", ".cob", ".cpy", ".sqlcbl"],
         "configuration": "./language-configuration.json"
       }
     ],
