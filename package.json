@@ -16,6 +16,10 @@
     "ibm-i",
     "mainframe"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GabeWalls/db2-embedded-sql.git"
+  },
   "contributes": {
     "languages": [
       {

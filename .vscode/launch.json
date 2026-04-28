@@ -1,4 +1,9 @@
 {
+  // This file is only for local "Run Extension" (F5). It is not bundled with the
+  // published VSIX and does not change runtime for Marketplace/VSIX installs.
+  // --disable-extensions below applies only to the Extension Development Host
+  // process VS Code spawns for this launch config (isolates your extension for
+  // testing); end users never receive these args.
   "version": "0.2.0",
   "configurations": [
     {
