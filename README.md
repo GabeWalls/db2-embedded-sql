@@ -1,30 +1,53 @@
-# DB2 Embedded SQL (COBOL)
+# DB2 Embedded SQL
 
-This extension is **centered on embedded DB2 SQL** (`EXEC SQL` … `END-EXEC`). It is **not** a replacement for a full COBOL language extension.
+**DB2 Embedded SQL** adds syntax highlighting for **IBM Db2 SQL embedded in COBOL**—that is, statements between **`EXEC SQL`** and **`END-EXEC`** (with optional **`.`** after `END-EXEC`). It is intentionally **not** a full COBOL language extension.
 
-## Who highlights what
+## Features
 
-- **Normal COBOL** (divisions, paragraphs, `MOVE`, `PIC`, data names, folding, etc.) comes from **your existing COBOL extension** and its TextMate grammar. Install whichever COBOL extension you prefer for `.cbl`, `.cob`, `.cpy`, and related files.
+- **Injection mode:** Highlights SQL keywords, host variables (`:name`), and SQL-style comments **inside** `EXEC SQL` … `END-EXEC` blocks when you edit COBOL with a grammar that exposes a supported root scope (see below).
+- **Fallback mode:** A minimal **`db2-cobol`** language (basic comments, strings, a short keyword list, plus the same embedded-SQL rules) for **`.sqlcbl`** and **`.sqb`** only—useful for quick viewing or when injection does not apply.
+- **Snippets** (language **`db2-cobol`** only): `execsql`, `selectinto`, `declarecursor`, `opencursor`, `fetchcursor`, `closecursor`, `commit`, `rollback`, `sqlca`.
 
-- **Embedded SQL** inside `EXEC SQL` … `END-EXEC` is added by **this** extension via an **injection grammar** (`syntaxes/db2-sql-injection.tmLanguage.json`). It only targets those blocks; it does not try to re-highlight all of COBOL.
+## Supported file types
 
-- **Standalone “DB2 COBOL” language** is a **small fallback** for **`.sqlcbl`** and **`.sqb`** only (`syntaxes/db2-cobol.tmLanguage.json`): basic comments, strings, a short keyword list, plus the same embedded-SQL rules. It is **not** meant to match rich COBOL extensions. For production COBOL editing, prefer a dedicated COBOL extension and rely on injection for SQL.
+| Association | Extensions | Role |
+|-------------|------------|------|
+| **This extension** | **`.sqlcbl`**, **`.sqb`** | Language id `db2-cobol`: fallback grammar + snippets. |
+| **Your COBOL extension** | **`.cbl`**, **`.cob`**, **`.cpy`**, etc. | Normal COBOL highlighting; this extension **does not** register these extensions for `db2-cobol`, so it does not replace your COBOL grammar. |
 
-This extension **does not register** `.cbl`, `.cob`, or `.cpy` for the `db2-cobol` language id, so it will not take those associations away from another extension.
+## Injection mode vs fallback mode
 
-## Injection vs standalone
+| Mode | When it applies | What you get |
+|------|-----------------|--------------|
+| **Injection** | File uses a COBOL language whose grammar root is listed in `package.json` → `injectTo` (e.g. `source.cobol`). | SQL-focused highlighting **only** inside `EXEC SQL` … `END-EXEC`. All other COBOL comes from **your** COBOL extension. |
+| **Fallback** | File is **`.sqlcbl`** or **`.sqb`** (language `db2-cobol`). | Minimal COBOL-ish highlighting **plus** embedded SQL rules—enough for small samples or tooling output, **not** a substitute for a mature COBOL highlighter. |
 
-| Mechanism | Where | Role |
-|-----------|--------|------|
-| Injection | `injectTo` in `package.json` → `db2-sql-injection.tmLanguage.json` | SQL highlighting inside `EXEC SQL` … `END-EXEC` when the editor uses a supported COBOL root scope. |
-| Standalone | Language id `db2-cobol` on **`.sqlcbl`** / **`.sqb`** only | Minimal COBOL-ish coloring + embedded SQL when you open those extensions without a full COBOL grammar, or for quick viewing. |
+To learn your COBOL grammar’s root scope or add a new injection target, see **[docs/testing.md](docs/testing.md)**.
 
-Keep `exec-sql-*` / `sql-*` rules in the injection file and the standalone file **in step** if you change SQL highlighting (they are duplicated on purpose; VS Code does not cross-include TextMate repositories).
+## Local testing
 
-## Default injection targets
+1. Clone or open this repository in VS Code.
+2. Run **Run Extension** (**F5**) using [`.vscode/launch.json`](.vscode/launch.json) to start an **Extension Development Host**.
+3. In the host window:
+   - Open a **`.cbl`** file with your COBOL extension enabled and confirm SQL inside `EXEC SQL` … `END-EXEC` picks up SQL scopes (use **Developer: Inspect Editor Tokens and Scopes** on a `SELECT` token).
+   - Open a **`.sqlcbl`** or **`.sqb`** file and confirm `db2-cobol` highlighting and snippets (prefixes such as `execsql`, `sqlca`).
 
-See `package.json` → `contributes.grammars` → `injectTo`. To discover your COBOL extension’s root scope or add a new target, see **[docs/testing.md](docs/testing.md)**.
+## Known limitations
+
+- **Not a full COBOL grammar:** Division/section structure, copybooks, and rich COBOL semantics are out of scope; use a dedicated COBOL extension for `.cbl` / `.cob` / `.cpy`.
+- **Injection roots are fixed:** Only grammars whose base scope matches `injectTo` (see `package.json`) receive SQL injection; others require a local change to `injectTo` and `injectionSelector` (documented in `docs/testing.md`).
+- **String/comment guard:** Injection skips scopes whose path includes `string` or `comment`; unusual host grammars may behave differently.
+- **Snippets** apply only when the language mode is **`db2-cobol`** (i.e. mainly **`.sqlcbl`** / **`.sqb`**), not automatically for all COBOL extensions.
+- **SQL keyword list** is finite; rare Db2 syntax may not match a dedicated SQL extension.
+
+## Roadmap
+
+- **RPG** embedded SQL highlighting (similar injection pattern for RPG sources) is **planned**; not included in the current release.
 
 ## Development
 
-Open this folder in VS Code and use **Run Extension** (F5) from `.vscode/launch.json` to test in an Extension Development Host.
+From the repo root, **F5** → Extension Development Host. See `docs/testing.md` for token inspection and extending injection targets.
+
+## Publisher
+
+`package.json` sets `publisher` for local packaging; **change it to your Marketplace publisher id** before publishing to the VS Code Marketplace.

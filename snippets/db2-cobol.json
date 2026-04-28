@@ -1,0 +1,87 @@
+{
+  "execsql": {
+    "prefix": "execsql",
+    "body": [
+      "           EXEC SQL",
+      "             ${1}",
+      "           END-EXEC${2:.}"
+    ],
+    "description": "EXEC SQL … END-EXEC block"
+  },
+  "selectinto": {
+    "prefix": "selectinto",
+    "body": [
+      "           EXEC SQL",
+      "             SELECT ${1:*}",
+      "               INTO :${2:WS-VAR}",
+      "                  , :${3:WS-VAR2}",
+      "               FROM ${4:table}",
+      "              WHERE ${5:condition}",
+      "           END-EXEC${6:.}"
+    ],
+    "description": "SELECT … INTO host variables"
+  },
+  "declarecursor": {
+    "prefix": "declarecursor",
+    "body": [
+      "           EXEC SQL",
+      "             DECLARE ${1:cursor-name} CURSOR FOR",
+      "             SELECT ${2:*}",
+      "               FROM ${3:table}",
+      "              WHERE ${4:condition}",
+      "           END-EXEC${5:.}"
+    ],
+    "description": "DECLARE CURSOR FOR SELECT"
+  },
+  "opencursor": {
+    "prefix": "opencursor",
+    "body": [
+      "           EXEC SQL",
+      "             OPEN ${1:cursor-name}",
+      "           END-EXEC${2:.}"
+    ],
+    "description": "OPEN cursor"
+  },
+  "fetchcursor": {
+    "prefix": "fetchcursor",
+    "body": [
+      "           EXEC SQL",
+      "             FETCH ${1:cursor-name}",
+      "              INTO :${2:WS-VAR}",
+      "           END-EXEC${3:.}"
+    ],
+    "description": "FETCH cursor INTO host variables"
+  },
+  "closecursor": {
+    "prefix": "closecursor",
+    "body": [
+      "           EXEC SQL",
+      "             CLOSE ${1:cursor-name}",
+      "           END-EXEC${2:.}"
+    ],
+    "description": "CLOSE cursor"
+  },
+  "commit": {
+    "prefix": "commit",
+    "body": [
+      "           EXEC SQL",
+      "             COMMIT${1: WORK}",
+      "           END-EXEC${2:.}"
+    ],
+    "description": "COMMIT (optionally WORK)"
+  },
+  "rollback": {
+    "prefix": "rollback",
+    "body": [
+      "           EXEC SQL",
+      "             ROLLBACK${1: WORK}",
+      "           END-EXEC${2:.}"
+    ],
+    "description": "ROLLBACK (optionally WORK)"
+  },
+  "sqlca": {
+    "prefix": "sqlca",
+    "body": ["           EXEC SQL INCLUDE SQLCA END-EXEC${1:.}"],
+    "description": "INCLUDE SQLCA communication area"
+  }
+}

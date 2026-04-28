@@ -1,13 +1,21 @@
 {
-  "name": "db2-embedded-sql-cobol",
-  "displayName": "DB2 Embedded SQL (COBOL)",
-  "description": "Injects DB2 EXEC SQL … END-EXEC highlighting into COBOL grammars; minimal standalone grammar for .sqlcbl/.sqb only.",
+  "name": "db2-embedded-sql",
+  "displayName": "DB2 Embedded SQL",
+  "description": "Syntax highlighting for DB2 SQL embedded in COBOL (EXEC SQL … END-EXEC). Injects into common COBOL grammars; minimal fallback language for .sqlcbl and .sqb.",
   "version": "0.0.1",
-  "publisher": "local",
+  "publisher": "wallga1",
   "engines": {
     "vscode": "^1.85.0"
   },
   "categories": ["Programming Languages"],
+  "keywords": [
+    "cobol",
+    "db2",
+    "sql",
+    "embedded-sql",
+    "ibm-i",
+    "mainframe"
+  ],
   "contributes": {
     "languages": [
       {
@@ -27,6 +35,12 @@
         "scopeName": "source.db2-sql-injection.cobol",
         "path": "./syntaxes/db2-sql-injection.tmLanguage.json",
         "injectTo": ["source.cobol", "source.cobol85", "source.gnucobol"]
+      }
+    ],
+    "snippets": [
+      {
+        "language": "db2-cobol",
+        "path": "./snippets/db2-cobol.json"
       }
     ]
   }
