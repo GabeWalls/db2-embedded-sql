@@ -1,0 +1,28 @@
+{
+  "name": "db2-embedded-sql-cobol",
+  "displayName": "DB2 Embedded SQL (COBOL)",
+  "description": "Syntax highlighting for COBOL with DB2 EXEC SQL ... END-EXEC blocks.",
+  "version": "0.0.1",
+  "publisher": "local",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": ["Programming Languages"],
+  "contributes": {
+    "languages": [
+      {
+        "id": "db2-cobol",
+        "aliases": ["DB2 COBOL", "db2-cobol"],
+        "extensions": [".cbl", ".cob", ".cpy"],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "db2-cobol",
+        "scopeName": "source.db2-cobol",
+        "path": "./syntaxes/db2-cobol.tmLanguage.json"
+      }
+    ]
+  }
+}
