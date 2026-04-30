@@ -5,14 +5,6 @@
   "injectionSelector": "(L:source.cobol | L:source.cobol85 | L:source.gnucobol) -string -comment",
   "patterns": [{ "include": "#exec-sql-block" }],
   "repository": {
-    "string-single": {
-      "name": "string.quoted.single.cobol",
-      "match": "(?m)'(?:''|[^'\\n])*'"
-    },
-    "string-double": {
-      "name": "string.quoted.double.cobol",
-      "match": "(?m)\"(?:\"\"|[^\"\\n])*\""
-    },
     "sql-current": {
       "name": "keyword.other.sql",
       "match": "(?i)\\bCURRENT\\s+(?:DATE|TIME|TIMESTAMP|USER)\\b"
@@ -29,6 +21,10 @@
       "name": "keyword.other.sql",
       "match": "(?i)\\b(?:SELECT|INSERT|UPDATE|DELETE|MERGE|INTO|FROM|WHERE|SET|VALUES|JOIN|INNER|LEFT|RIGHT|FULL|OUTER|CROSS|ON|GROUP|BY|ORDER|HAVING|FETCH|FIRST|ONLY|ROW|ROWS|DECLARE|CURSOR|FOR|OPEN|CLOSE|PREPARE|EXECUTE|IMMEDIATE|COMMIT|ROLLBACK|WORK|CONNECT|DISCONNECT|WHENEVER|SQLERROR|SQLWARNING|FOUND|CONTINUE|INCLUDE|SQLCA|SQLDA|WITH|AS|UNION|ALL|DISTINCT|CASE|WHEN|THEN|ELSE|END|EXISTS|IN|BETWEEN|LIKE|IS|NULL|NOT|AND|OR|AT|BEGIN|OF|READ|OPTIMIZE|LOCK|SHARE|SKIP|LOCKED|DATA|BUFFER|POOL|INDEX|TABLE|VIEW|SCHEMA|GRANT|REVOKE|REFERENCES|CONSTRAINT|PRIMARY|KEY|FOREIGN|DEFAULT|CHECK|CREATE|ALTER|DROP|TRIGGER|PROCEDURE|FUNCTION|CALL|RETURN|RETURNS|LANGUAGE|READS|WRITES|MODIFIES|STATIC|DYNAMIC|HOST|VARIABLES|NEXT|PRIOR|LAST|ABSOLUTE|RELATIVE|SENSITIVE|INSENSITIVE|SCROLL|HOLD|WITHOUT|RESULT|SETS|ATOMIC|SAVEPOINT|RELEASE|TO|DESCRIBE|INDICATOR|USING|GO\\s+TO|GOTO)\\b"
     },
+    "sql-not-found": {
+      "name": "keyword.other.sql",
+      "match": "(?i)\\bNOT\\s+FOUND\\b"
+    },
     "host-variable": {
       "name": "variable.other.host.sql",
       "match": ":[A-Za-z0-9][A-Za-z0-9_-]*"
@@ -36,7 +32,7 @@
     "sql-comment": {
       "patterns": [
         {
-          "name": "comment.line.double-slash.sql",
+          "name": "comment.line.double-dash.sql",
           "match": "--[^\\n]*"
         },
         {
@@ -45,15 +41,24 @@
         }
       ]
     },
+    "sql-string-single": {
+      "name": "string.quoted.single.sql",
+      "match": "(?m)'(?:''|[^'\\n])*'"
+    },
+    "sql-string-double": {
+      "name": "string.quoted.double.sql",
+      "match": "(?m)\"(?:\"\"|[^\"\\n])*\""
+    },
     "exec-sql-inner": {
       "patterns": [
         { "include": "#sql-comment" },
-        { "include": "#string-single" },
-        { "include": "#string-double" },
+        { "include": "#sql-string-single" },
+        { "include": "#sql-string-double" },
         { "include": "#sql-current" },
         { "include": "#sql-numeric-literal" },
         { "include": "#host-variable" },
         { "include": "#sql-support-function" },
+        { "include": "#sql-not-found" },
         { "include": "#sql-keyword" }
       ]
     },
@@ -61,11 +66,11 @@
       "contentName": "meta.embedded.block.sql.cobol",
       "begin": "(?i)(\\bEXEC\\s+SQL\\b)",
       "beginCaptures": {
-        "1": { "name": "keyword.other.exec-sql.begin.cobol" }
+        "1": { "name": "keyword.other.sql.embedded.cobol" }
       },
       "end": "(?i)(\\bEND-EXEC)(\\.)?",
       "endCaptures": {
-        "1": { "name": "keyword.other.exec-sql.end.cobol" },
+        "1": { "name": "keyword.other.sql.embedded.cobol" },
         "2": { "name": "punctuation.terminator.statement.cobol" }
       },
       "patterns": [{ "include": "#exec-sql-inner" }]

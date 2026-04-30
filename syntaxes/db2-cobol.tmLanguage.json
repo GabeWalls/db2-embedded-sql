@@ -8,7 +8,13 @@
     { "include": "#string-single" },
     { "include": "#string-double" },
     { "include": "#cobol-level-number" },
-    { "include": "#cobol-keyword-fallback" },
+    { "include": "#cobol-phrase-next-sentence" },
+    { "include": "#cobol-phrase-go-to" },
+    { "include": "#cobol-control" },
+    { "include": "#cobol-statement-verbs" },
+    { "include": "#cobol-storage-modifiers" },
+    { "include": "#cobol-storage-clauses" },
+    { "include": "#cobol-reserved-misc" },
     { "include": "#cobol-data-name" }
   ],
   "repository": {
@@ -35,13 +41,41 @@
     "cobol-level-number": {
       "patterns": [
         {
-          "comment": "Fixed-format: cols 1-6 sequence/change, col 7 not * or /, then Area A/B spaces and level 01-49, 66, 77, 88 (not PIC 9(5) etc., which are not line-anchored this way).",
+          "comment": "Fixed-format: cols 1-6 sequence/change, col 7 not * or /, then Area A/B spaces and level 01-49, 66, 77, 88 (not PIC 9(5) etc.).",
           "match": "(?m)^(?!\\s*\\*>)(?!.{6}[*/])(.{6})(.)(\\s*)(0[1-9]|[12][0-9]|3[0-9]|4[0-9]|66|77|88)(?=\\s)",
           "captures": {
             "4": { "name": "constant.numeric.level.cobol" }
           }
         }
       ]
+    },
+    "cobol-phrase-next-sentence": {
+      "name": "support.function.cobol",
+      "match": "(?i)\\bNEXT\\s+SENTENCE\\b"
+    },
+    "cobol-phrase-go-to": {
+      "name": "keyword.control.cobol",
+      "match": "(?i)\\bGO\\s+TO\\b"
+    },
+    "cobol-control": {
+      "name": "keyword.control.cobol",
+      "match": "(?i)\\b(?:IF|ELSE|END-IF|EVALUATE|END-EVALUATE|WHEN|PERFORM|END-PERFORM|CALL|EXIT|STOP|GOBACK|GOTO|END-READ|END-WRITE|CONTINUE|AND|OR|NOT|UNTIL|VARYING)\\b"
+    },
+    "cobol-statement-verbs": {
+      "name": "support.function.cobol",
+      "match": "(?i)\\b(?:MOVE|TO|FROM|INTO|USING|GIVING|OPEN|CLOSE|READ|WRITE|REWRITE|DELETE|START|DISPLAY|ACCEPT|INITIALIZE|ADD|SUBTRACT|MULTIPLY|DIVIDE|COMPUTE|INPUT|OUTPUT|I-O|EXTEND|INSPECT|SEARCH|SET|SORT|MERGE|STRING|UNSTRING|EXECUTE|CANCEL)\\b"
+    },
+    "cobol-storage-modifiers": {
+      "name": "storage.modifier.cobol",
+      "match": "(?i)\\b(?:COMP|COMP-1|COMP-2|COMP-3|COMP-4|COMP-5|BINARY|PACKED-DECIMAL|SIGN|JUSTIFIED|USAGE|INDEXED|DEPENDING)\\b"
+    },
+    "cobol-storage-clauses": {
+      "name": "storage.type.cobol",
+      "match": "(?i)\\b(?:PIC|PICTURE|VALUE|VALUES|REDEFINES|OCCURS|TIMES)\\b"
+    },
+    "cobol-reserved-misc": {
+      "name": "keyword.other.cobol",
+      "match": "(?i)\\b(?:ADDRESS|ADVANCING|AFTER|ALL|ALTER|ASSIGN|AUTHOR|BLANK|BLOCK|BY|CLASS|CODE|COLUMN|CONFIGURATION|COPY|DATA|DATE|DAY|DIVISION|ENTRY|ENVIRONMENT|FD|FILE|FILLER|FOR|FUNCTION|GLOBAL|GREATER|GROUP|HEADING|HIGH-VALUE|HIGH-VALUES|IDENTIFICATION|INDEX|INSTALLATION|INVALID|IS|KEY|LABEL|LESS|LINKAGE|LOCAL-STORAGE|LOCK|LOW-VALUE|LOW-VALUES|MEMORY|NULL|NUMBER|OBJECT-COMPUTER|OF|OFF|ON|OPTIONAL|ORGANIZATION|OTHER|OVERFLOW|PLUS|POINTER|POSITION|PROCEDURE|PROGRAM|PROGRAM-ID|PURGE|RECORD|RELEASE|RENAMES|REPLACE|REPORT|RETURN|RUN|SECTION|SELECT|SEND|SEQUENTIAL|SOURCE|SPACE|SPACES|STANDARD|SUM|THAN|THROUGH|THRU|TRUE|USE|WITH|WORKING-STORAGE|ZERO|ZEROS|ASCENDING|DESCENDING|ACCESS|MODE|RELATIVE|DUPLICATES|ALTERNATE|STATUS|CONTROL|RECORDS|ARE|OMITTED|CHARACTER|REEL|UNIT|ROUNDED|SIZE|ERROR|EXCEPTION|EQUAL|QUOTE|QUOTES|ZEROES|CORR|CORRESPONDING|DELIMITED|REPLACING|LEADING|TRAILING|FIRST|LAST|CHAIN|GENERATE|INITIATE|SUPPRESS|TERMINATE|DEBUGGING|TRACK|INDEPENDENT|SHARING|NO|REWIND|IGNORE|PRIOR|NEXT|CONSOLE|DEBUG|CONTENTS|REMAINDER|COMMON|INITIAL)\\b"
     },
     "cobol-data-name": {
       "patterns": [
@@ -51,10 +85,6 @@
           "match": "(?i)\\b(?!(?:WORKING-STORAGE|OBJECT-COMPUTER|PROGRAM-ID|LOCAL-STORAGE|FILE-SECTION|DATA-DIVISION|PROCEDURE-DIVISION|IDENTIFICATION-DIVISION|ENVIRONMENT-DIVISION|SCREEN-SECTION|LINKAGE-SECTION|INPUT-OUTPUT|FILE-CONTROL|END-IF|END-EXEC|END-EVALUATE|END-PERFORM|END-READ|END-WRITE|HIGH-VALUES|LOW-VALUES|LINE-COUNTER|PAGE-COUNTER|SOURCE-COMPUTER|SPECIAL-NAMES)\\b)([A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+)\\b"
         }
       ]
-    },
-    "cobol-keyword-fallback": {
-      "name": "keyword.control.cobol",
-      "match": "(?i)\\b(ACCEPT|ADD|ADDRESS|ADVANCING|AFTER|ALL|AND|ALTER|ASSIGN|AUTHOR|BINARY|BLANK|BLOCK|BY|CALL|CANCEL|CLASS|CLOSE|CODE|COLUMN|CONFIGURATION|CONTINUE|COPY|DATA|DATE|DAY|DELETE|DISPLAY|DIVISION|DIVIDE|ELSE|END|END-EVALUATE|END-IF|END-PERFORM|END-READ|END-WRITE|ENTRY|ENVIRONMENT|EVALUATE|EXECUTE|EXIT|FD|FILE|FILLER|FOR|FROM|FUNCTION|GIVING|GLOBAL|GO|GOBACK|GREATER|GROUP|HEADING|HIGH-VALUE|HIGH-VALUES|IDENTIFICATION|IF|IN|INDEX|INITIALIZE|INPUT|INSPECT|INSTALLATION|INTO|INVALID|IS|JUSTIFIED|KEY|LABEL|LESS|LINKAGE|LOCAL-STORAGE|LOCK|LOW-VALUE|LOW-VALUES|MEMORY|MERGE|MOVE|MULTIPLY|NOT|NULL|NUMBER|OBJECT-COMPUTER|OCCURS|OF|OFF|ON|OPEN|OPTIONAL|OR|ORGANIZATION|OTHER|OUTPUT|OVERFLOW|PERFORM|PIC|PICTURE|PLUS|POINTER|POSITION|PROCEDURE|PROGRAM|PROGRAM-ID|PURGE|READ|RECORD|REDEFINES|RELEASE|RENAMES|REPLACE|REPORT|RETURN|REWRITE|RUN|SEARCH|SECTION|SELECT|SEND|SEQUENTIAL|SET|SIGN|SORT|SOURCE|SPACE|SPACES|STANDARD|STOP|STRING|SUBTRACT|SUM|THAN|THROUGH|THRU|TIMES|TO|TRUE|UNTIL|USAGE|USE|USING|VALUE|VALUES|WHEN|WITH|WORKING-STORAGE|WRITE|ZERO|ZEROS)\\b"
     },
     "sql-current": {
       "name": "keyword.other.sql",
@@ -72,6 +102,10 @@
       "name": "keyword.other.sql",
       "match": "(?i)\\b(?:SELECT|INSERT|UPDATE|DELETE|MERGE|INTO|FROM|WHERE|SET|VALUES|JOIN|INNER|LEFT|RIGHT|FULL|OUTER|CROSS|ON|GROUP|BY|ORDER|HAVING|FETCH|FIRST|ONLY|ROW|ROWS|DECLARE|CURSOR|FOR|OPEN|CLOSE|PREPARE|EXECUTE|IMMEDIATE|COMMIT|ROLLBACK|WORK|CONNECT|DISCONNECT|WHENEVER|SQLERROR|SQLWARNING|FOUND|CONTINUE|INCLUDE|SQLCA|SQLDA|WITH|AS|UNION|ALL|DISTINCT|CASE|WHEN|THEN|ELSE|END|EXISTS|IN|BETWEEN|LIKE|IS|NULL|NOT|AND|OR|AT|BEGIN|OF|READ|OPTIMIZE|LOCK|SHARE|SKIP|LOCKED|DATA|BUFFER|POOL|INDEX|TABLE|VIEW|SCHEMA|GRANT|REVOKE|REFERENCES|CONSTRAINT|PRIMARY|KEY|FOREIGN|DEFAULT|CHECK|CREATE|ALTER|DROP|TRIGGER|PROCEDURE|FUNCTION|CALL|RETURN|RETURNS|LANGUAGE|READS|WRITES|MODIFIES|STATIC|DYNAMIC|HOST|VARIABLES|NEXT|PRIOR|LAST|ABSOLUTE|RELATIVE|SENSITIVE|INSENSITIVE|SCROLL|HOLD|WITHOUT|RESULT|SETS|ATOMIC|SAVEPOINT|RELEASE|TO|DESCRIBE|INDICATOR|USING|GO\\s+TO|GOTO)\\b"
     },
+    "sql-not-found": {
+      "name": "keyword.other.sql",
+      "match": "(?i)\\bNOT\\s+FOUND\\b"
+    },
     "host-variable": {
       "name": "variable.other.host.sql",
       "match": ":[A-Za-z0-9][A-Za-z0-9_-]*"
@@ -79,7 +113,7 @@
     "sql-comment": {
       "patterns": [
         {
-          "name": "comment.line.double-slash.sql",
+          "name": "comment.line.double-dash.sql",
           "match": "--[^\\n]*"
         },
         {
@@ -88,15 +122,24 @@
         }
       ]
     },
+    "sql-string-single": {
+      "name": "string.quoted.single.sql",
+      "match": "(?m)'(?:''|[^'\\n])*'"
+    },
+    "sql-string-double": {
+      "name": "string.quoted.double.sql",
+      "match": "(?m)\"(?:\"\"|[^\"\\n])*\""
+    },
     "exec-sql-inner": {
       "patterns": [
         { "include": "#sql-comment" },
-        { "include": "#string-single" },
-        { "include": "#string-double" },
+        { "include": "#sql-string-single" },
+        { "include": "#sql-string-double" },
         { "include": "#sql-current" },
         { "include": "#sql-numeric-literal" },
         { "include": "#host-variable" },
         { "include": "#sql-support-function" },
+        { "include": "#sql-not-found" },
         { "include": "#sql-keyword" }
       ]
     },
@@ -104,11 +147,11 @@
       "contentName": "meta.embedded.block.sql.cobol",
       "begin": "(?i)(\\bEXEC\\s+SQL\\b)",
       "beginCaptures": {
-        "1": { "name": "keyword.other.exec-sql.begin.cobol" }
+        "1": { "name": "keyword.other.sql.embedded.cobol" }
       },
       "end": "(?i)(\\bEND-EXEC)(\\.)?",
       "endCaptures": {
-        "1": { "name": "keyword.other.exec-sql.end.cobol" },
+        "1": { "name": "keyword.other.sql.embedded.cobol" },
         "2": { "name": "punctuation.terminator.statement.cobol" }
       },
       "patterns": [{ "include": "#exec-sql-inner" }]

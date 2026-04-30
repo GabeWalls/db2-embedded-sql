@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.6] - 2026-04-30
+
+### Changed
+
+- **COBOL fallback scopes:** Split reserved words into `keyword.control.cobol` (control flow: `IF`, `ELSE`, `END-IF`, `EVALUATE`, `WHEN`, `PERFORM`, `GO TO`, `GOTO`, `CALL`, `EXIT`, `STOP`, `GOBACK`, etc.), `support.function.cobol` (statement verbs such as `MOVE`, `TO`, `OPEN` / `INPUT` / `OUTPUT`, `READ`, `WRITE`, `DISPLAY`, `COMPUTE`, etc.), `storage.type.cobol` / `storage.modifier.cobol` (data clauses such as `PIC` / `PICTURE`, `VALUE` / `VALUES`, `REDEFINES`, `OCCURS`, `TIMES`, `COMP` / `COMP-3`, `USAGE`, etc.), and `keyword.other.cobol` for remaining structural / miscellaneous COBOL tokens—closer to common theme mappings for mature COBOL grammars (no theme colors hard-coded).
+- **Embedded SQL scopes:** `EXEC SQL` and `END-EXEC` use `keyword.other.sql.embedded.cobol`; inside the block, `--` comments use `comment.line.double-dash.sql`, `/* */` use `comment.block.sql`, literals use `string.quoted.single.sql` / `string.quoted.double.sql`, with `keyword.other.sql`, `support.function.sql`, `variable.other.host.sql`, and `constant.numeric.sql` unchanged in role but applied consistently in both fallback and injection grammars.
+- **DB2 SQL coverage:** Retained and ordered rules for common embedded SQL (including `NOT FOUND`, `GO TO` / `GOTO`, aggregates, scalar functions, and `CURRENT DATE` / `TIME` / `TIMESTAMP` / `USER`).
+
+### Notes
+
+- RPG embedded SQL support remains planned and is **not** included in this release.
+
 ## [0.0.5] - 2026-04-30
 
 ### Changed

@@ -8,6 +8,7 @@
        01  WS-NAME          PIC X(40) VALUE SPACES.
        05  WS-COUNT         PIC S9(9) COMP.
        05  WS-AMT           PIC 9(4)V99.
+       05  WS-TABLE OCCURS 20 TIMES PIC X(8).
        77  WS-FLAG          PIC X VALUE 'N'.
 
       *> Fixed-format style: cols 1-6 = sequence/change, col 7 blank, then level + names
@@ -34,8 +35,11 @@
            COMPUTE WS-AMT = 3.14 * 2
            IF WS-COUNT > 50
                GO TO 030-EXIT
+           ELSE
+               NEXT SENTENCE
            END-IF
            CALL 'SUBPROG' USING WS-NAME
+           OPEN INPUT ACCT-FILE
            PERFORM 020-BRANCH
            .
        020-BRANCH.
