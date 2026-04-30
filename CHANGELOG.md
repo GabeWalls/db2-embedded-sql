@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.5] - 2026-04-30
+
+### Changed
+
+- **COBOL fallback (`.sqlcbl` / `.sqb`):** Highlight standard data level numbers (`01`–`49`, `66`, `77`, `88`) on fixed-format lines (after sequence/change and column 7), scoped as `constant.numeric.level.cobol`, without treating `PIC` picture clauses like `9(5)` or `X(50)` as level numbers.
+- **COBOL fallback:** Highlight hyphenated data names (e.g. `VEH-DESC`, `DISPLAY-DATE`, `RECORD-DATE`) as `variable.other.cobol`, with exclusions for common hyphenated reserved phrases.
+- **Embedded SQL:** Broader DB2-style keyword and function coverage in both fallback and injection grammars (`keyword.other.sql`, `support.function.sql`), including joins, fetch/row limits, cursor lifecycle, `WHENEVER` / `SQLERROR` / `SQLWARNING` / `NOT FOUND`, `INCLUDE` / `SQLCA` / `SQLDA`, set operators, `CASE`, predicates, aggregates, scalar functions, and `CURRENT DATE` / `CURRENT TIME` / `CURRENT TIMESTAMP` / `CURRENT USER`.
+- **Consistency:** SQL token rules and ordering are aligned between `db2-cobol.tmLanguage.json` and `db2-sql-injection.tmLanguage.json` (comments, strings, `CURRENT …`, numeric literals, host variables, then functions then keywords).
+
+### Notes
+
+- RPG embedded SQL support remains planned and is **not** included in this release.
+
 ## [0.0.1] - 2026-04-28
 
 ### Added
