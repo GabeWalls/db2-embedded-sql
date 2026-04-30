@@ -4,6 +4,7 @@
   "description": "Syntax highlighting for DB2 SQL embedded in COBOL (EXEC SQL … END-EXEC). Injects into common COBOL grammars; minimal fallback language for .sqlcbl and .sqb.",
   "version": "0.0.1",
   "publisher": "WallsTech",
+  "icon": "icon.png",
   "engines": {
     "vscode": "^1.85.0"
   },
