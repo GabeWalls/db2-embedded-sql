@@ -21,18 +21,6 @@ Works with your existing COBOL extension — it does not replace it.
 - For `.sqlcbl` and `.sqb` files
 - Uses a lightweight built-in COBOL + SQL highlighter
 
-## Snippets (fallback mode)
-
-Available in `db2-cobol` files:
-
-- execsql
-- selectinto
-- declarecursor
-- fetchcursor
-- commit
-- rollback
-- sqlca
-
 ## Notes
 
 - This is not a full COBOL language extension
