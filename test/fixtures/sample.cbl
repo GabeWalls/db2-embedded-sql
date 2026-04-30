@@ -9,6 +9,20 @@
        05  WS-COUNT         PIC S9(9) COMP.
        05  WS-AMT           PIC 9(4)V99.
        77  WS-FLAG          PIC X VALUE 'N'.
+
+      *> Fixed-format style: cols 1-6 = sequence/change, col 7 blank, then level + names
+654321      01  VEH-RECORD.
+654321          05 VEH-DESC          PIC X(50).
+654321          05 VEH-YR            PIC 9(4).
+654321          05 DISPLAY-DATE      PIC X(10).
+654321          05 DISPLAY-DATX      PIC X(10).
+654321          05 DD8-MM            PIC X(8).
+654321          05 RECORD-DATE       PIC X(10).
+654321          05 AMT-FMT           PIC S9(7)V99.
+654321      77  WS-SQLCODE          PIC S9(9) COMP.
+654321      88  END-OF-DATA         VALUE HIGH-VALUES.
+654321      88  HAS-ROWS            VALUE 'Y' 'y'.
+
        PROCEDURE DIVISION.
       / Fixed-format: / in column 7 (compiler-directing style line)
        010-MAIN.
@@ -41,20 +55,7 @@
            GOBACK
            .
 
-      *> Fixed-format style: cols 1-6 = sequence/change, col 7 blank, then level + names
-654321      01  VEH-RECORD.
-654321          05 VEH-DESC          PIC X(50).
-654321          05 VEH-YR            PIC 9(4).
-654321          05 DISPLAY-DATE      PIC X(10).
-654321          05 DISPLAY-DATX      PIC X(10).
-654321          05 DD8-MM            PIC X(8).
-654321          05 RECORD-DATE       PIC X(10).
-654321          05 AMT-FMT           PIC S9(7)V99.
-654321      77  WS-SQLCODE          PIC S9(9) COMP.
-654321      88  END-OF-DATA         VALUE HIGH-VALUES.
-654321      88  HAS-ROWS            VALUE 'Y' 'y'.
-
-654321      PROCEDURE DIVISION.
+       040-SQL.
 654321          EXEC SQL
 654321              DECLARE C1 CURSOR FOR
 654321              SELECT VEH-DESC, VEH-YR, COALESCE(TRIM(:WS-NAME), ' ')
