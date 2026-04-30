@@ -2,7 +2,7 @@
   "name": "db2-embedded-sql",
   "displayName": "DB2 Embedded SQL",
   "description": "Syntax highlighting for DB2 SQL embedded in COBOL (EXEC SQL ... END-EXEC)",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "publisher": "WallsTech",
   "icon": "icon.png",
   "engines": {
